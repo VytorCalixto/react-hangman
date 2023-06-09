@@ -84,7 +84,7 @@ export default () => {
     setCorrectLetters([])
     setWordFromAPI([])
     setWord('')
-    getDataFromAPI()
+    getWord()
     setIsGameOver(false)
     inputRef.current.focus()
   }
@@ -108,49 +108,8 @@ export default () => {
     setWord(word)
   }
 
-  const getDataFromAPI = () => {
-    const params = {
-      hasDictionaryDef: true,
-      minCorpusCount: 0,
-      maxCorpusCount: -1,
-      maxDictionaryCount: -1,
-      minLength: 3,
-      maxLength: 12,
-      api_key: 'a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5',
-    }
-    let url = new URL('http://api.wordnik.com/v4/words.json/randomWord')
-    Object.keys(params).forEach(key =>
-      url.searchParams.append(key, params[key])
-    )
-    fetch(url, {
-      method: 'GET',
-    })
-      .then(response => {
-        const responseStatus = response.status
-        if (responseStatus >= 400 && responseStatus <= 500) {
-          throw Error('API error, creating random word localy!')
-        }
-        return response.json()
-      })
-      .then(response => {
-        wordSetter(response.word)
-        return response.status
-      })
-      .catch(error => {
-        console.log(error)
-        const fruits = [
-          'Apple',
-          'Orange',
-          'Pear',
-          'Lemon',
-          'Kiwi',
-          'Watermelon',
-          'Strawberry',
-          'Banana',
-        ]
-        const randomFruit = fruits[Math.floor(Math.random() * fruits.length)]
-        wordSetter(randomFruit)
-      })
+  const getWord = () => {
+    wordSetter("Vanessa")
   }
 
   const countCorrectLetters = correctLetters => {
